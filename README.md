@@ -17,7 +17,7 @@ This is what the attack rates should look like after you process the data.
 | Salad        | 10.22%      |
 
 ## Odds Ratios and 95% Confidence Intervals
-This is what the odds ratios and statistical significance should look like. You may see some variation depending on whether you're using the Fisher's Exact Test of Chi Square test.
+This is what the odds ratios and statistical significance should look like. You may see some variation depending on whether you're using the Fisher's Exact Test or Chi Square test.
 
 | Food Item    | Odds Ratio | 95% CI Lower | 95% CI Upper | Significant? |
 |--------------|------------|--------------|--------------|--------------|
