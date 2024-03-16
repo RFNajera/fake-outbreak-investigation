@@ -7,10 +7,10 @@ library(gt)
 # Load the data from a CSV file into a dataframe called 'df'
 df <- read_csv("fake_outbreak_dataset.csv")
 
-# Convert all columns except 'personID' to factor data type
+# Convert all columns except 'personID' and the date/times to factor data type
 # The '[,-1]' selects all columns except the first one (assuming 'personID' is the first)
 df <- df %>% 
-  mutate(across(-personID, as.factor)) 
+  mutate(across(-c(personID,onset_date,exposure_date), as.factor)) 
 
 # Display a summary of the dataframe, showing frequencies of all variables
 summary(df)
@@ -50,7 +50,6 @@ attack_rates %>%
     Ill = "Number Ill",
     Attack_Rate = "Attack Rate (%)"
   )
-
 
 # Display the attack rate results
 print(attack_rates)
@@ -107,3 +106,16 @@ perform_chi_square <- function(data, dependent_var) {
 # Execute the chi-square analysis function for each variable against "illness" and print results
 results_summary <- perform_chi_square(df, "illness")
 print(results_summary)
+
+# Create the epidemiological curve plot ----
+ggplot(df, aes(x = onset_date)) +
+  geom_histogram(binwidth = 21600, fill = "skyblue", color = "black") +  # Bin by 6 hours (21600 seconds)
+  labs(
+    title = "Epidemiological Curve of Onset Dates",
+    x = "Onset Date",
+    y = "Number of Cases",
+    caption = "Data Source: Fake Dataset"
+  ) +
+  scale_x_datetime(date_breaks = "24 hours")+
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
